@@ -2,6 +2,7 @@ import os
 import pickle
 from pathlib import Path
 from typing import Any
+import argparse
 
 import numpy as np
 from joblib import Parallel, delayed
@@ -13,6 +14,30 @@ from plotting import plot_population_results, plot_final_state_and_lineages
 
 RESULTS_DIR = Path("results")
 RESULTS_DIR.mkdir(exist_ok=True)
+
+
+def get_effective_cpu_count() -> int:
+    # cgroups v2
+    try:
+        with open("/sys/fs/cgroup/cpu.max") as f:
+            quota, period = f.read().strip().split()
+            if quota != "max":
+                return max(1, int(int(quota) / int(period)))
+    except Exception:
+        pass
+
+    # cgroups v1
+    try:
+        with open("/sys/fs/cgroup/cpu/cpu.cfs_quota_us") as f:
+            quota = int(f.read().strip())
+        with open("/sys/fs/cgroup/cpu/cpu.cfs_period_us") as f:
+            period = int(f.read().strip())
+        if quota > 0:
+            return max(1, int(quota / period))
+    except Exception:
+        pass
+
+    return os.cpu_count() or 2
 
 
 def make_seeds(n_runs: int, base_seed: int = 42) -> np.ndarray:
@@ -50,7 +75,6 @@ def run_single(seed: int, params: IWS2Parameters, steps: int = 3000) -> dict[str
 
     final_H = sim.H.copy()
 
-    # Si le modèle n'a pas encore lineage_uid, on crée un fallback simple
     if hasattr(sim, "lineage_uid"):
         lineage_uid = np.asarray(sim.lineage_uid)
     else:
@@ -78,17 +102,18 @@ def run_experiment(
     n_jobs: int | None = None,
     base_seed: int = 42,
     save_raw: bool = True,
+    run_tag: str = "default",
 ) -> dict[str, Any]:
     if n_jobs is None:
-        cpu_count = os.cpu_count() or 2
+        cpu_count = get_effective_cpu_count()
         n_jobs = max(1, cpu_count - 1)
 
     seeds = make_seeds(n_runs=n_runs, base_seed=base_seed)
 
     print(f"\n=== Running {label} ===")
-    print(f"steps={steps}, n_runs={n_runs}, n_jobs={n_jobs}")
+    print(f"steps={steps}, n_runs={n_runs}, n_jobs={n_jobs}, run_tag={run_tag}")
 
-    results = Parallel(n_jobs=n_jobs, backend="loky")(
+    results = Parallel(n_jobs=n_jobs, backend="loky", verbose=1)(
         delayed(run_single)(seed, params, steps)
         for seed in tqdm(seeds, desc=label)
     )
@@ -103,7 +128,9 @@ def run_experiment(
     }
 
     if save_raw:
-        save_pickle(out, RESULTS_DIR / f"{label.replace(' ', '_').replace(':', '').lower()}_raw.pkl")
+        safe_label = label.replace(" ", "_").replace(":", "").lower()
+        fname = f"{safe_label}_{run_tag}_raw.pkl"
+        save_pickle(out, RESULTS_DIR / fname)
 
     return out
 
@@ -136,11 +163,11 @@ def save_summary(summary: dict[str, Any], name: str) -> None:
     save_pickle(summary, RESULTS_DIR / f"{name}_summary.pkl")
 
 
-def build_regimes() -> list[tuple[str, IWS2Parameters]]:
+def build_regimes(max_nodes: int) -> list[tuple[str, IWS2Parameters]]:
     common = dict(
         n_nodes=10,
         dim=2,
-        dt=0.05,
+        dt=0.02,
         theta_div=3.0,
         theta_safe=0.8,
         theta_death=1.2,
@@ -148,10 +175,8 @@ def build_regimes() -> list[tuple[str, IWS2Parameters]]:
         kappa0=10.0,
         delta_div=0.3,
         theta_kappa=0.5,
-        rho_min=0.4,
-        rho_max=0.6,
         p_inherit=0.5,
-        max_nodes=300,
+        max_nodes=max_nodes,
     )
 
     e1 = IWS2Parameters(
@@ -190,42 +215,65 @@ def build_regimes() -> list[tuple[str, IWS2Parameters]]:
     ]
 
 
-def main():
-    n_runs = 10
-    steps = 2000
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--n_runs", type=int, default=10)
+    parser.add_argument("--steps", type=int, default=2000)
+    parser.add_argument("--max_nodes", type=int, default=300)
+    return parser.parse_args()
 
-    cpu_count = os.cpu_count() or 2
+
+def main():
+    args = parse_args()
+    run_tag = f"R{args.n_runs}_S{args.steps}_M{args.max_nodes}"
+    output_dir = Path("output") / run_tag
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    cpu_count = get_effective_cpu_count()
     n_jobs = max(1, cpu_count - 1)
+
+    print(
+        f"""
+=== Experiment config ===
+n_runs    : {args.n_runs}
+steps     : {args.steps}
+max_nodes : {args.max_nodes}
+run_tag   : {run_tag}
+n_jobs    : {n_jobs}
+========================
+"""
+    )
 
     summaries = []
 
-    for idx, (label, params) in enumerate(build_regimes()):
+    for idx, (label, params) in enumerate(build_regimes(max_nodes=args.max_nodes)):
         exp = run_experiment(
             label=label,
             params=params,
-            n_runs=n_runs,
-            steps=steps,
+            n_runs=args.n_runs,
+            steps=args.steps,
             n_jobs=n_jobs,
             base_seed=42 + idx,
             save_raw=True,
+            run_tag=run_tag,
         )
         summary = summarize_experiment(exp)
 
         name = label.replace(":", "").replace("+", "plus").replace(" ", "_").lower()
-        save_summary(summary, name)
+        save_summary(summary, f"{name}_{run_tag}")
 
         summaries.append(summary)
 
     plot_population_results(
         summaries,
-        steps=steps,
-        filename="output/figure_population.png",
+        steps=args.steps,
+        filename=output_dir / "figure_population.png",
         show=True,
     )
 
     plot_final_state_and_lineages(
         summaries,
-        filename="output/figure_lineages.png",
+        filename=output_dir / "figure_lineages.png",
         show=True,
     )
 
