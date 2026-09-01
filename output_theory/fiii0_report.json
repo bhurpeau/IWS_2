@@ -1,0 +1,70 @@
+{
+  "P1_superposition": {
+    "s_AB_lu": [
+      0.01793,
+      -0.00966
+    ],
+    "s_AB_predit": [
+      0.01793,
+      -0.00966
+    ],
+    "s_BA_lu": [
+      0.01791,
+      0.00968
+    ],
+    "s_BA_predit": [
+      0.01798,
+      0.00975
+    ]
+  },
+  "P2_suffisance": {
+    "R_hist_AB": {
+      "+u1": "....AA",
+      "-u1": "......"
+    },
+    "R_inject_sAB": {
+      "+u1": "....AA",
+      "-u1": "......"
+    },
+    "identiques_AB": true,
+    "R_hist_BA": {
+      "+u1": "..AAAA",
+      "-u1": "......"
+    },
+    "R_inject_sBA": {
+      "+u1": "..AAAA",
+      "-u1": "......"
+    },
+    "identiques_BA": true,
+    "effet_ordre_recence": "present (AB != BA), entierement porte par s_vec"
+  },
+  "P3_annulation": {
+    "T2e": 10,
+    "norme_s_test": 0.0001,
+    "R_annulee": {
+      "+u1": ".....A",
+      "-u1": ".....A"
+    },
+    "R_vierge": {
+      "+u1": ".....A",
+      "-u1": ".....A"
+    },
+    "identiques": true
+  },
+  "P3_dual": {
+    "cancel": {
+      "+u1": "..AAAA",
+      "-u1": "..AAAA"
+    },
+    "virgin": {
+      "+u1": "..AAAA",
+      "-u1": "..AAAA"
+    },
+    "s_sc": 0.013620504161663372
+  },
+  "P4": {
+    "T_C": 100.0,
+    "PC": 3.246573235196175,
+    "CP": 5.2476150112344096e-21
+  }
+}

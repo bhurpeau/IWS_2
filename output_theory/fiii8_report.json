@@ -1,0 +1,150 @@
+{
+  "T1": {
+    "motif": ".................................AAAAAAAAAAAAAAAAA",
+    "n_commutations": 1,
+    "s_star_80": 0.016266
+  },
+  "T2": {
+    "60": {
+      "s_star": null,
+      "scan": "................"
+    },
+    "70": {
+      "s_star": 0.02509,
+      "scan": ".......AAAAAAAAA"
+    },
+    "80": {
+      "s_star": 0.01627,
+      "scan": ".....AAAAAAAAAAA"
+    },
+    "90": {
+      "s_star": 0.01552,
+      "scan": "..A.AAAAAAAAAAAA"
+    },
+    "100": {
+      "s_star": 0.01314,
+      "scan": "....AAAAAAAAAAAA"
+    },
+    "110": {
+      "s_star": 0.01533,
+      "scan": "..AAAAAAAAAAAAAA"
+    },
+    "120": {
+      "s_star": 0.00373,
+      "scan": ".AAAAAAAAAAAAAAA"
+    },
+    "130": {
+      "s_star": 0.00373,
+      "scan": ".AAAAAAAAAAAAAAA"
+    },
+    "140": {
+      "s_star": null,
+      "scan": "AAAAAAAAAAAAAAAA"
+    }
+  },
+  "T3": {
+    "17.5": {
+      "predite": ".......AAAA",
+      "mesuree": ".......AAAA",
+      "accord": true
+    },
+    "20.0": {
+      "predite": ".....AAAAAA",
+      "mesuree": ".....AAAAAA",
+      "accord": true
+    }
+  },
+  "T5": {
+    "lignes": [
+      {
+        "s0": 0.01,
+        "s_total": 0.01317,
+        "issue": "A",
+        "naive": ".",
+        "pointwise": "A",
+        "accord_pointwise": true
+      },
+      {
+        "s0": 0.0104,
+        "s_total": 0.01335,
+        "issue": "A",
+        "naive": ".",
+        "pointwise": "A",
+        "accord_pointwise": true
+      },
+      {
+        "s0": 0.0108,
+        "s_total": 0.01353,
+        "issue": "A",
+        "naive": ".",
+        "pointwise": "A",
+        "accord_pointwise": true
+      },
+      {
+        "s0": 0.0112,
+        "s_total": 0.01371,
+        "issue": "A",
+        "naive": ".",
+        "pointwise": "A",
+        "accord_pointwise": true
+      },
+      {
+        "s0": 0.0116,
+        "s_total": 0.01389,
+        "issue": "A",
+        "naive": ".",
+        "pointwise": "A",
+        "accord_pointwise": true
+      },
+      {
+        "s0": 0.012,
+        "s_total": 0.01407,
+        "issue": ".",
+        "naive": ".",
+        "pointwise": ".",
+        "accord_pointwise": true
+      },
+      {
+        "s0": 0.0124,
+        "s_total": 0.01425,
+        "issue": ".",
+        "naive": ".",
+        "pointwise": ".",
+        "accord_pointwise": true
+      },
+      {
+        "s0": 0.0128,
+        "s_total": 0.01443,
+        "issue": ".",
+        "naive": ".",
+        "pointwise": ".",
+        "accord_pointwise": true
+      },
+      {
+        "s0": 0.0132,
+        "s_total": 0.01461,
+        "issue": ".",
+        "naive": ".",
+        "pointwise": ".",
+        "accord_pointwise": true
+      },
+      {
+        "s0": 0.0136,
+        "s_total": 0.01479,
+        "issue": ".",
+        "naive": ".",
+        "pointwise": ".",
+        "accord_pointwise": true
+      }
+    ],
+    "s_total_croissante": true,
+    "accord_naif": 5,
+    "accord_pointwise": 10,
+    "carte_omega_110": "AAAAAAAAAAAAAAAA...AAAAAAAAAA",
+    "ile_repos": [
+      0.01399,
+      0.01534
+    ],
+    "verdict": "anti-monotonie = ecriture croissante x ile interne de omega (C2, option multi-composantes)"
+  }
+}

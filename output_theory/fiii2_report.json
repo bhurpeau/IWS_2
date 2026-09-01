@@ -1,0 +1,66 @@
+{
+  "X0": {
+    "PC": 3.246573235196175,
+    "CP": 5.2476150112342365e-21,
+    "ecart_ref": 0.0
+  },
+  "X1": {
+    "grid": "T2=40..140 pas 10, u in {+u1,-u1}",
+    "cartes": {
+      "a": ".....A.AAAA...........",
+      "b": ".....A.AAAA...........",
+      "c": ".......AAAA..........A"
+    }
+  },
+  "X2": {
+    "separations_ab": [
+      [
+        20.0,
+        "+u1",
+        80,
+        ".",
+        "A"
+      ]
+    ],
+    "n_sep_ab": 1,
+    "l": {
+      "ab": 2,
+      "ac": 1,
+      "bc": 1
+    }
+  },
+  "X3": {
+    "d": {
+      "ab": 0.1353352832366127,
+      "ac": 0.36787944117144233,
+      "bc": 0.36787944117144233
+    },
+    "ultrametrique_verifiee": true,
+    "isocele": true
+  },
+  "X4": {
+    "cartes_l1_identiques": true,
+    "l_E2": 2,
+    "temoin": [
+      1,
+      70,
+      "A",
+      "."
+    ]
+  },
+  "X5": {
+    "signatures": {
+      "ref_PC": "AAAAAA......",
+      "A+s": "AAAAAA......",
+      "s_seul": "..AAAA......",
+      "A_seul": "AAAAAA...AAA"
+    },
+    "s_ref": [
+      0.02951765438817743,
+      0.02951765438817743
+    ],
+    "suffisance_A_s": true,
+    "bassin_necessaire": true,
+    "contenu_necessaire": true
+  }
+}

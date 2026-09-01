@@ -1,276 +1,158 @@
-from __future__ import annotations
-
-from dataclasses import dataclass
-import random
-from typing import Dict
-
 import numpy as np
-
-
-def sigmoid(x: float | np.ndarray) -> float | np.ndarray:
-    return 1.0 / (1.0 + np.exp(-x))
-
+from dataclasses import dataclass
 
 @dataclass
-class IWS2Parameters:
-    n_nodes: int = 10
+class IWSParameters:
+    """Configuration parameters for the Inner World System (IWS) simulation."""
+    n_nodes: int = 20
     dim: int = 2
     dt: float = 0.05
-    max_nodes: int = 300
+    
+    # Trace and friction parameters
+    gamma0: float = 0.25
+    gamma_tau: float = 1.25
+    alpha_trace: float = 0.45
+    beta_trace: float = 0.12
+    
+    # Memory-induced geometry
+    lambda_metric: float = 2.0
+    
+    # Internal pressure parameters
+    kappa1: float = 0.6
+    kappa2: float = 0.4
+    kappa3: float = 0.5
+    kappa_rel: float = 0.7
+    
+    # Kairos events parameters
+    theta_kairos: float = 1.25
+    rewire_top_k: int = 2
+    cut_bottom_k: int = 2
+    max_density: float = 0.35
+    
+    # Regime flags
+    use_memory_geometry: bool = True
+    use_kairos: bool = True
 
-    use_division: bool = True
-    use_apoptosis: bool = True
-    use_senescence: bool = True
+def row_normalize_with_self_loops(A: np.ndarray) -> np.ndarray:
+    n = A.shape[0]
+    A_hat = A + np.eye(n)
+    row_sums = A_hat.sum(axis=1, keepdims=True)
+    row_sums[row_sums == 0] = 1.0
+    return A_hat / row_sums
 
-    theta_div: float = 3.0
-    theta_safe: float = 0.8
-    theta_kappa: float = 0.5
-    alpha_rho: float = 5.0
-
-    theta_death: float = 1.2
-    deg_min: int = 2
-
-    kappa0: float = 10.0
-    delta_div: float = 0.3
-    theta_frag: float = 1.5
-    theta_age: int = 200
-
-    trace_decay: float = 0.995
-    state_noise: float = 0.08
-    division_noise: float = 0.05
-
-    a_tau: float = 1.5
-    a_P: float = 1.2
-    a_kappa: float = 1.0
-    a_R: float = 0.08
-    a_age: float = 0.5
-    a_frag: float = 0.8
-
-    R0: float = 100.0
-    R_regen: float = 0.5
-    cost_div: float = 1.0
-    gain_death: float = 0.5
-    R_offset: float = 10.0
-
-    p_inherit: float = 0.3
-    velocity_decay = 0.9
-    h_damping = 1.0
-    tau_coupling = 0.08
-    trace_decay = 0.98
-    trace_write = 0.02
-    state_noise = 0.02
-    intrinsic_drive = 0.01
-    h_clip = 10.0
-    v_clip = 10.0
-    tau_clip = 5.0
-
-class Node:
-    def __init__(self, idx: int, dim: int, kappa0: float):
-        self.id = idx
-        self.H = np.random.normal(0.0, 1.0, size=dim)
-        self.V = np.random.normal(0.0, 0.2, size=dim)
-        self.tau = np.zeros(dim, dtype=float)
-        self.kappa = float(kappa0)
-        self.age = 0
-        self.neighbors: set[int] = set()
-        self.lineage_uid = idx
-
-
-class IWSSimulationPaper2:
-    def __init__(self, params: IWS2Parameters, seed: int = 42):
+class IWSSimulation:
+    def __init__(self, params: IWSParameters, seed: int = 42):
         self.params = params
-        self.dim = params.dim
-        np.random.seed(seed)
-        random.seed(seed)
+        self.rng = np.random.default_rng(seed)
+        self.n = params.n_nodes
+        self.d = params.dim
+        self.dt = params.dt
 
-        self.nodes: Dict[int, Node] = {}
-        self.next_id = 0
-        self.R = float(params.R0)
+        # Initial graph: sparse symmetric adjacency
+        A_init = (self.rng.random((self.n, self.n)) < 0.15).astype(float)
+        A_init = np.triu(A_init, 1)
+        self.A = A_init + A_init.T
 
-        self.divisions_this_step = 0
-        self.apoptoses_this_step = 0
+        self.H = self.rng.normal(0, 0.6, (self.n, self.d))
+        self.V = self.rng.normal(0, 0.1, (self.n, self.d))
+        self.tau = np.zeros((self.n, self.d))
+        self.P = np.zeros(self.n)
+        self.W = self.rng.normal(0, 0.3, (self.n, self.d))
 
         self.history = {
-            "population_size": [],
-            "num_divisions": [],
-            "num_apoptosis": [],
-            "mean_kappa": [],
-            "mean_trace": [],
-            "state_var": [],
+            "mean_trace": [], "mean_pressure": [], "num_kairos": [],
+            "num_edges": [], "h_norm": [], "h_var": []
         }
 
-        for _ in range(params.n_nodes):
-            self.add_node()
+    def potential_gradient(self, H: np.ndarray) -> np.ndarray:
+        return H
 
-        self._refresh_arrays()
+    def metric_action(self, tau_i: np.ndarray, grad_i: np.ndarray) -> np.ndarray:
+        if not self.params.use_memory_geometry:
+            return grad_i
+        norm2 = float(tau_i @ tau_i)
+        outer = np.outer(tau_i, tau_i) / (1.0 + norm2)
+        g_tau = np.eye(self.d) + self.params.lambda_metric * outer
+        g_inv = np.linalg.inv(g_tau)
+        return g_inv @ grad_i
 
-    def add_node(self) -> Node:
-        node = Node(self.next_id, self.dim, self.params.kappa0)
-        self.nodes[self.next_id] = node
-        self.next_id += 1
-        return node
+    def step(self):
+        A_norm = row_normalize_with_self_loops(self.A)
+        neigh = A_norm @ self.H
+        grad_phi = self.potential_gradient(self.H)
 
-    def _refresh_arrays(self) -> None:
-        ordered_ids = sorted(self.nodes.keys())
-        self.node_ids = ordered_ids
-        if not ordered_ids:
-            self.H = np.zeros((0, self.dim))
-            self.V = np.zeros((0, self.dim))
-            self.tau = np.zeros((0, self.dim))
-            self.kappa = np.zeros(0)
-            self.lineage_uid = np.zeros(0, dtype=int)
-            return
-        self.H = np.stack([self.nodes[i].H for i in ordered_ids], axis=0)
-        self.V = np.stack([self.nodes[i].V for i in ordered_ids], axis=0)
-        self.tau = np.stack([self.nodes[i].tau for i in ordered_ids], axis=0)
-        self.kappa = np.array([self.nodes[i].kappa for i in ordered_ids], dtype=float)
-        self.lineage_uid = np.array([self.nodes[i].lineage_uid for i in ordered_ids], dtype=int)
+        tau_norm = np.linalg.norm(self.tau, axis=1, keepdims=True)
+        gamma = self.params.gamma0 + self.params.gamma_tau * tau_norm
 
-    def compute_pressure(self, node: Node) -> float:
-        return float(np.linalg.norm(node.H) + 0.35 * np.linalg.norm(node.V))
+        geom_grad = np.zeros_like(self.H)
+        for i in range(self.n):
+            geom_grad[i] = self.metric_action(self.tau[i], grad_phi[i])
 
+        relational_term = 0.8 * np.tanh(neigh)
+        external_term = 0.15 * self.W
 
-    def update_state(self, node: Node) -> None:
-        noise = np.random.normal(0.0, self.params.state_noise, size=self.dim)
-    
-        node.V = (
-            self.params.velocity_decay * node.V
-            + self.params.dt * (
-                -self.params.h_damping * node.H
-                + self.params.tau_coupling * node.tau
-            )
-            + noise
-            + self.params.intrinsic_drive
+        dV = -gamma * self.V - geom_grad + relational_term + external_term
+        dH = self.V
+
+        self.V += self.dt * dV
+        self.H += self.dt * dH
+
+        dTau = self.params.alpha_trace * neigh - self.params.beta_trace * self.tau
+        self.tau += self.dt * dTau
+
+        rel_stress = np.linalg.norm(self.H - neigh, axis=1)
+        dP = (
+            self.params.kappa1 * np.linalg.norm(grad_phi, axis=1)
+            + self.params.kappa2 * np.linalg.norm(self.V, axis=1)
+            + self.params.kappa_rel * rel_stress
+            - self.params.kappa3 * self.P
         )
-    
-        node.H = node.H + self.params.dt * node.V
-    
-        node.V = np.clip(node.V, -self.params.v_clip, self.params.v_clip)
-        node.H = np.clip(node.H, -self.params.h_clip, self.params.h_clip)
-    
-    
-    def update_trace(self, node: Node) -> None:
-        node.tau = (
-            self.params.trace_decay * node.tau
-            + self.params.trace_write * node.H
-        )
-        node.tau = np.clip(node.tau, -self.params.tau_clip, self.params.tau_clip)
+        self.P += self.dt * dP
 
-    def division_probability(self, node: Node) -> float:
-        P = self.compute_pressure(node)
-        x = (
-            self.params.a_tau * (np.linalg.norm(node.tau) - self.params.theta_div)
-            - self.params.a_P * (P - self.params.theta_safe)
-            + self.params.a_kappa * (node.kappa - self.params.theta_kappa)
-            + self.params.a_R * (self.R - self.params.R_offset)
-        )
-        return float(sigmoid(x))
+        kairos_nodes = np.where(self.P > self.params.theta_kairos)[0]
+        if self.params.use_kairos and len(kairos_nodes) > 0:
+            self.apply_kairos(kairos_nodes)
+        else:
+            kairos_nodes = np.array([], dtype=int)
 
-    def apoptosis_probability(self, node: Node) -> float:
-        P = self.compute_pressure(node)
-        x = (
-            1.0 * (self.params.theta_kappa - node.kappa)
-            + self.params.a_frag * (P - self.params.theta_frag)
-            + self.params.a_age * ((node.age - self.params.theta_age) / max(1, self.params.theta_age))
-        )
-        return float(sigmoid(x))
+        self._record_history(len(kairos_nodes))
 
-    def divide(self, node: Node) -> None:
-        if len(self.nodes) >= self.params.max_nodes:
-            return
+    def apply_kairos(self, kairos_nodes: np.ndarray):
+        tau_norm = np.linalg.norm(self.tau, axis=1, keepdims=True)
+        tau_safe = self.tau / np.maximum(tau_norm, 1e-8)
 
-        rho_base = np.random.beta(self.params.alpha_rho, self.params.alpha_rho)
-        rho_H = np.clip(rho_base + np.random.normal(0.0, 0.05), 0.01, 0.99)
-        rho_V = np.clip(rho_base + np.random.normal(0.0, 0.05), 0.01, 0.99)
+        for i in kairos_nodes:
+            scores = tau_safe @ tau_safe[i]
+            scores[i] = -np.inf
+            neighbors = np.where(self.A[i] > 0)[0]
+            non_neighbors = np.where(self.A[i] == 0)[0]
+            non_neighbors = non_neighbors[non_neighbors != i]
 
-        H_parent = node.H.copy()
-        V_parent = node.V.copy()
-        tau_parent = node.tau.copy()
+            if len(neighbors) > 0:
+                worst = neighbors[np.argsort(scores[neighbors])[: self.params.cut_bottom_k]]
+                for j in worst:
+                    self.A[i, j] = 0.0
+                    self.A[j, i] = 0.0
 
-        child = Node(self.next_id, self.dim, self.params.kappa0)
-        child.lineage_uid = node.lineage_uid
+            density = self.A.sum() / (self.n * (self.n - 1))
+            if density < self.params.max_density and len(non_neighbors) > 0:
+                best = non_neighbors[np.argsort(scores[non_neighbors])[-self.params.rewire_top_k :]]
+                for j in best:
+                    self.A[i, j] = 1.0
+                    self.A[j, i] = 1.0
 
-        noise_H_child = np.random.normal(0.0, self.params.division_noise, size=self.dim)
-        noise_H_parent = np.random.normal(0.0, self.params.division_noise, size=self.dim)
-        noise_V_child = np.random.normal(0.0, self.params.division_noise, size=self.dim)
-        noise_V_parent = np.random.normal(0.0, self.params.division_noise, size=self.dim)
+            self.P[i] *= 0.35
+            self.V[i] *= 0.5
+            self.H[i] += self.rng.normal(0, 0.1, self.d)
 
-        child.H = (1.0 - rho_H) * H_parent + noise_H_child
-        node.H = rho_H * H_parent + noise_H_parent
+    def _record_history(self, num_kairos_events: int):
+        self.history["mean_trace"].append(np.mean(np.linalg.norm(self.tau, axis=1)))
+        self.history["mean_pressure"].append(np.mean(self.P))
+        self.history["num_kairos"].append(num_kairos_events)
+        self.history["num_edges"].append(self.A.sum() / 2.0)
+        self.history["h_norm"].append(np.mean(np.linalg.norm(self.H, axis=1)))
+        self.history["h_var"].append(np.mean(np.var(self.H, axis=0)))
 
-        child.V = (1.0 - rho_V) * V_parent + noise_V_child
-        node.V = rho_V * V_parent + noise_V_parent
-
-        child.tau = tau_parent + np.random.normal(0.0, self.params.division_noise, size=self.dim)
-
-        child.neighbors.add(node.id)
-        parent_neighbors = list(node.neighbors)
-        for neigh_id in parent_neighbors:
-            if neigh_id != node.id and random.random() < self.params.p_inherit and neigh_id in self.nodes:
-                child.neighbors.add(neigh_id)
-                self.nodes[neigh_id].neighbors.add(child.id)
-        node.neighbors.add(child.id)
-
-        node.kappa = max(0.0, node.kappa - self.params.delta_div)
-        child.kappa = max(0.0, node.kappa)
-
-        self.nodes[child.id] = child
-        self.next_id += 1
-        self.R -= self.params.cost_div
-        self.divisions_this_step += 1
-
-    def apoptosis(self, node_id: int) -> None:
-        if node_id not in self.nodes:
-            return
-        node = self.nodes[node_id]
-        for neigh_id in list(node.neighbors):
-            if neigh_id in self.nodes:
-                self.nodes[neigh_id].neighbors.discard(node_id)
-        del self.nodes[node_id]
-        self.R += self.params.gain_death
-        self.apoptoses_this_step += 1
-
-    def _record_history(self) -> None:
-        self._refresh_arrays()
-        n = len(self.nodes)
-        self.history["population_size"].append(float(n))
-        self.history["num_divisions"].append(float(self.divisions_this_step))
-        self.history["num_apoptosis"].append(float(self.apoptoses_this_step))
-        self.history["mean_kappa"].append(float(np.mean(self.kappa)) if n > 0 else 0.0)
-        self.history["mean_trace"].append(float(np.mean(np.linalg.norm(self.tau, axis=1))) if n > 0 else 0.0)
-        self.history["state_var"].append(float(np.mean(np.var(self.H, axis=0))) if n > 0 else 0.0)
-
-    def step(self) -> None:
-        self.divisions_this_step = 0
-        self.apoptoses_this_step = 0
-
-        node_ids = list(self.nodes.keys())
-        for i in node_ids:
-            if i not in self.nodes:
-                continue
-            node = self.nodes[i]
-            self.update_state(node)
-            self.update_trace(node)
-            node.age += 1
-
-        for i in node_ids:
-            if i not in self.nodes:
-                continue
-            node = self.nodes[i]
-
-            if self.params.use_division and random.random() < self.division_probability(node):
-                self.divide(node)
-
-            if i not in self.nodes:
-                continue
-            node = self.nodes[i]
-
-            if self.params.use_apoptosis:
-                if self.compute_pressure(node) > self.params.theta_death and len(node.neighbors) < self.params.deg_min:
-                    self.apoptosis(i)
-                    continue
-                if self.params.use_senescence and i in self.nodes and random.random() < self.apoptosis_probability(self.nodes[i]):
-                    self.apoptosis(i)
-
-        self.R += self.params.R_regen
-        self._record_history()
+    def run(self, steps: int = 5000):
+        for _ in range(steps):
+            self.step()

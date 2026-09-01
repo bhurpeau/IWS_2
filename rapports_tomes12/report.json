@@ -1,0 +1,154 @@
+{
+  "patch_version": "iws-core-0.1.1-patch1",
+  "git_commit": "2bab269",
+  "steps": 5000,
+  "arms": {
+    "1a_flow_control": {
+      "max_spread": 1.3322676295501878e-15,
+      "o6_final": 9.860761315262648e-32,
+      "interpretation": "symetrie du flot : PASS si ~precision machine"
+    },
+    "1b_tiebreak": {
+      "first_kairos_step": 255,
+      "first_simultaneous": {
+        "step": 255,
+        "n_nodes": 20
+      },
+      "spread_before_first_kairos": 5.551115123125783e-17,
+      "o6_final": 4.930380657631324e-31,
+      "n_kairos": 7940,
+      "G": NaN,
+      "interpretation": "brisure CONVENTIONNELLE (D-08) au premier evenement simultane, journalisee"
+    },
+    "2_perturbation": [
+      {
+        "eps0": 1e-08,
+        "o6_final": 2.12647317763639e-29,
+        "G": -0.4576669281184336,
+        "amplification_o6_over_eps0sq": 2.1264731776363897e-13,
+        "first_kairos_step": 255,
+        "n_kairos": 7940
+      },
+      {
+        "eps0": 1e-06,
+        "o6_final": 2.192664869167868e-25,
+        "G": -0.45766677264299743,
+        "amplification_o6_over_eps0sq": 2.1926648691678683e-13,
+        "first_kairos_step": 255,
+        "n_kairos": 7940
+      },
+      {
+        "eps0": 0.0001,
+        "o6_final": 6.506090332794675e-21,
+        "G": -0.4576664126984892,
+        "amplification_o6_over_eps0sq": 6.506090332794675e-13,
+        "first_kairos_step": 255,
+        "n_kairos": 7940
+      },
+      {
+        "eps0": 0.01,
+        "o6_final": 8.217640197110866e-17,
+        "G": -0.4576305762681849,
+        "amplification_o6_over_eps0sq": 8.217640197110866e-13,
+        "first_kairos_step": 255,
+        "n_kairos": 7940
+      }
+    ],
+    "3_random_graph": [
+      {
+        "seed": 7,
+        "o6_final": 4.930380657631324e-31,
+        "G": NaN,
+        "n_kairos": 8340
+      },
+      {
+        "seed": 11,
+        "o6_final": 3.944304526105059e-31,
+        "G": NaN,
+        "n_kairos": 8160
+      },
+      {
+        "seed": 19,
+        "o6_final": 9.367723249499515e-32,
+        "G": NaN,
+        "n_kairos": 8100
+      },
+      {
+        "seed": 23,
+        "o6_final": 4.190823558986625e-31,
+        "G": NaN,
+        "n_kairos": 7820
+      },
+      {
+        "seed": 31,
+        "o6_final": 4.930380657631324e-31,
+        "G": NaN,
+        "n_kairos": 7900
+      }
+    ],
+    "4_random_states": [
+      {
+        "seed": 7,
+        "o6_final": 2.1635382582080317e-10,
+        "G": -0.4375608303798947,
+        "n_kairos": 7116
+      },
+      {
+        "seed": 11,
+        "o6_final": 3.2269857238314754e-10,
+        "G": -0.4308489325264767,
+        "n_kairos": 7347
+      },
+      {
+        "seed": 19,
+        "o6_final": 4.244494441712304e-10,
+        "G": -0.5128505010466555,
+        "n_kairos": 7638
+      },
+      {
+        "seed": 23,
+        "o6_final": 7.755234024596178e-25,
+        "G": -0.4845302044894083,
+        "n_kairos": 1
+      },
+      {
+        "seed": 31,
+        "o6_final": 7.96454875432648e-10,
+        "G": -0.467352121293835,
+        "n_kairos": 7692
+      }
+    ],
+    "5_infinitesimal_noise": [
+      {
+        "seed": 7,
+        "o6_final": 5.7072000025653135e-15,
+        "G": 3.8601131222651213,
+        "n_kairos": 8340
+      },
+      {
+        "seed": 11,
+        "o6_final": 4.243775856305404e-15,
+        "G": 4.898018861466484,
+        "n_kairos": 8160
+      },
+      {
+        "seed": 19,
+        "o6_final": 6.1153755600916305e-15,
+        "G": 4.710204124035941,
+        "n_kairos": 8100
+      },
+      {
+        "seed": 23,
+        "o6_final": 9.352334034553804e-15,
+        "G": 0.4347304610361107,
+        "n_kairos": 7820
+      },
+      {
+        "seed": 31,
+        "o6_final": 6.720353134872735e-15,
+        "G": 0.13501894286066402,
+        "n_kairos": 7900
+      }
+    ]
+  }
+}

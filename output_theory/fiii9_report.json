@@ -1,0 +1,639 @@
+{
+  "W1": [
+    {
+      "theta": 0.0,
+      "motif": "...........AAA",
+      "bords": [
+        0.01627
+      ]
+    },
+    {
+      "theta": 0.025,
+      "motif": "..........AAAA",
+      "bords": [
+        0.01461
+      ]
+    },
+    {
+      "theta": 0.05,
+      "motif": ".........AAAAA",
+      "bords": [
+        0.01349
+      ]
+    },
+    {
+      "theta": 0.075,
+      "motif": "........AAAAAA",
+      "bords": [
+        0.01091
+      ]
+    },
+    {
+      "theta": 0.1,
+      "motif": "......AAAAAAA.",
+      "bords": [
+        0.0093,
+        0.01873
+      ]
+    },
+    {
+      "theta": 0.125,
+      "motif": "AAAAAAAAAAAAAA",
+      "bords": []
+    },
+    {
+      "theta": 0.15,
+      "motif": "AAAAAAAAAAAAAA",
+      "bords": []
+    },
+    {
+      "theta": 0.175,
+      "motif": "AAAAAAAAAAAAAA",
+      "bords": []
+    },
+    {
+      "theta": 0.2,
+      "motif": "AAAAAAAAAAAAAA",
+      "bords": []
+    },
+    {
+      "theta": 0.225,
+      "motif": "AAAAAAAAAAAAAA",
+      "bords": []
+    },
+    {
+      "theta": 0.25,
+      "motif": "AAAAAAAAAAAAAA",
+      "bords": []
+    },
+    {
+      "theta": 0.275,
+      "motif": "AAAAAAAAAAAAAA",
+      "bords": []
+    },
+    {
+      "theta": 0.3,
+      "motif": "AAAAAAAAAAAAAA",
+      "bords": []
+    }
+  ],
+  "W2": {
+    "chi": [
+      {
+        "chi": 0.0,
+        "motif": "...........AAA",
+        "bords": [
+          0.01627
+        ]
+      },
+      {
+        "chi": 0.005,
+        "motif": "...........AAA",
+        "bords": [
+          0.01614
+        ]
+      },
+      {
+        "chi": 0.01,
+        "motif": "...........AAA",
+        "bords": [
+          0.01619
+        ]
+      },
+      {
+        "chi": 0.015,
+        "motif": "...........AAA",
+        "bords": [
+          0.01584
+        ]
+      },
+      {
+        "chi": 0.02,
+        "motif": "...........AAA",
+        "bords": [
+          0.01544
+        ]
+      },
+      {
+        "chi": 0.025,
+        "motif": "..........AAAA",
+        "bords": [
+          0.01539
+        ]
+      },
+      {
+        "chi": 0.03,
+        "motif": "..........AAAA",
+        "bords": [
+          0.0152
+        ]
+      }
+    ],
+    "p": [
+      {
+        "p": 0.0,
+        "motif": "...........AAA",
+        "bords": [
+          0.01627
+        ]
+      },
+      {
+        "p": 0.2,
+        "motif": "...........AAA",
+        "bords": [
+          0.01608
+        ]
+      },
+      {
+        "p": 0.4,
+        "motif": "...........AAA",
+        "bords": [
+          0.01573
+        ]
+      },
+      {
+        "p": 0.6,
+        "motif": "...........AAA",
+        "bords": [
+          0.01564
+        ]
+      },
+      {
+        "p": 0.8,
+        "motif": "..........AAAA",
+        "bords": [
+          0.01459
+        ]
+      },
+      {
+        "p": 1.0,
+        "motif": "..........AAAA",
+        "bords": [
+          0.01468
+        ]
+      },
+      {
+        "p": 1.2,
+        "motif": "..........AAAA",
+        "bords": [
+          0.01458
+        ]
+      }
+    ]
+  },
+  "W3": {
+    "lignes": [
+      {
+        "T_am": 6.0,
+        "D": 12.0,
+        "s0": 0.004,
+        "z": [
+          0.0605,
+          0.0073,
+          0.1108,
+          0.01274
+        ],
+        "reel": "A",
+        "synthetique": "A",
+        "accord": true
+      },
+      {
+        "T_am": 6.0,
+        "D": 12.0,
+        "s0": 0.006,
+        "z": [
+          0.0605,
+          0.0073,
+          0.1124,
+          0.01457
+        ],
+        "reel": "A",
+        "synthetique": "A",
+        "accord": true
+      },
+      {
+        "T_am": 6.0,
+        "D": 15.0,
+        "s0": 0.004,
+        "z": [
+          0.0334,
+          0.004,
+          0.0773,
+          0.01263
+        ],
+        "reel": "A",
+        "synthetique": "A",
+        "accord": true
+      },
+      {
+        "T_am": 6.0,
+        "D": 15.0,
+        "s0": 0.006,
+        "z": [
+          0.0334,
+          0.004,
+          0.0784,
+          0.01443
+        ],
+        "reel": "A",
+        "synthetique": "A",
+        "accord": true
+      },
+      {
+        "T_am": 6.0,
+        "D": 21.0,
+        "s0": 0.004,
+        "z": [
+          0.0101,
+          0.0012,
+          0.0376,
+          0.01233
+        ],
+        "reel": ".",
+        "synthetique": ".",
+        "accord": true
+      },
+      {
+        "T_am": 6.0,
+        "D": 21.0,
+        "s0": 0.006,
+        "z": [
+          0.0101,
+          0.0012,
+          0.0382,
+          0.01407
+        ],
+        "reel": ".",
+        "synthetique": ".",
+        "accord": true
+      },
+      {
+        "T_am": 6.0,
+        "D": 150.0,
+        "s0": 0.004,
+        "z": [
+          0.0,
+          0.0,
+          0.0,
+          0.00648
+        ],
+        "reel": ".",
+        "synthetique": ".",
+        "accord": true
+      },
+      {
+        "T_am": 6.0,
+        "D": 150.0,
+        "s0": 0.006,
+        "z": [
+          0.0,
+          0.0,
+          0.0,
+          0.0074
+        ],
+        "reel": ".",
+        "synthetique": ".",
+        "accord": true
+      },
+      {
+        "T_am": 17.5,
+        "D": 50.0,
+        "s0": 0.008,
+        "z": [
+          0.0001,
+          0.0,
+          0.0021,
+          0.02558
+        ],
+        "reel": "A",
+        "synthetique": "A",
+        "accord": true
+      },
+      {
+        "T_am": 17.5,
+        "D": 50.0,
+        "s0": 0.01,
+        "z": [
+          0.0001,
+          0.0,
+          0.0021,
+          0.02701
+        ],
+        "reel": "A",
+        "synthetique": "A",
+        "accord": true
+      },
+      {
+        "T_am": 17.5,
+        "D": 150.0,
+        "s0": 0.008,
+        "z": [
+          0.0,
+          0.0,
+          0.0,
+          0.01552
+        ],
+        "reel": ".",
+        "synthetique": ".",
+        "accord": true
+      },
+      {
+        "T_am": 17.5,
+        "D": 150.0,
+        "s0": 0.01,
+        "z": [
+          0.0,
+          0.0,
+          0.0,
+          0.01638
+        ],
+        "reel": "A",
+        "synthetique": "A",
+        "accord": true
+      }
+    ],
+    "accord": "12/12",
+    "residu_hors_axe_max": 0.0
+  },
+  "W4": [
+    {
+      "T_am": 5.0,
+      "D": 15.0,
+      "theta": 0.0379,
+      "chi": 0.01488,
+      "fac_mesuree": 0.00286,
+      "fac_section": 0.00193,
+      "residu": 0.00093
+    },
+    {
+      "T_am": 5.0,
+      "D": 18.0,
+      "theta": 0.0267,
+      "chi": 0.00816,
+      "fac_mesuree": 0.00153,
+      "fac_section": 0.00153,
+      "residu": -0.0
+    },
+    {
+      "T_am": 5.0,
+      "D": 21.0,
+      "theta": 0.0187,
+      "chi": 0.00448,
+      "fac_mesuree": 0.00115,
+      "fac_section": 0.00087,
+      "residu": 0.00028
+    },
+    {
+      "T_am": 5.0,
+      "D": 25.0,
+      "theta": 0.0117,
+      "chi": 0.00201,
+      "fac_mesuree": 0.00013,
+      "fac_section": 0.00028,
+      "residu": -0.00015
+    },
+    {
+      "T_am": 5.5,
+      "D": 15.0,
+      "theta": 0.0699,
+      "chi": 0.00353,
+      "fac_mesuree": 0.005,
+      "fac_section": 0.0045,
+      "residu": 0.0005
+    },
+    {
+      "T_am": 5.5,
+      "D": 18.0,
+      "theta": 0.0497,
+      "chi": 0.00193,
+      "fac_mesuree": 0.00267,
+      "fac_section": 0.0028,
+      "residu": -0.00013
+    },
+    {
+      "T_am": 5.5,
+      "D": 21.0,
+      "theta": 0.0349,
+      "chi": 0.00106,
+      "fac_mesuree": 0.00214,
+      "fac_section": 0.00185,
+      "residu": 0.00029
+    },
+    {
+      "T_am": 5.5,
+      "D": 25.0,
+      "theta": 0.0218,
+      "chi": 0.00048,
+      "fac_mesuree": 0.00107,
+      "fac_section": 0.00101,
+      "residu": 6e-05
+    },
+    {
+      "T_am": 6.0,
+      "D": 15.0,
+      "theta": 0.0761,
+      "chi": 0.00402,
+      "fac_mesuree": 0.00559,
+      "fac_section": 0.00525,
+      "residu": 0.00034
+    },
+    {
+      "T_am": 6.0,
+      "D": 18.0,
+      "theta": 0.0542,
+      "chi": 0.00221,
+      "fac_mesuree": 0.00325,
+      "fac_section": 0.00326,
+      "residu": -1e-05
+    },
+    {
+      "T_am": 6.0,
+      "D": 21.0,
+      "theta": 0.0382,
+      "chi": 0.00121,
+      "fac_mesuree": 0.00199,
+      "fac_section": 0.00222,
+      "residu": -0.00023
+    },
+    {
+      "T_am": 6.0,
+      "D": 25.0,
+      "theta": 0.0238,
+      "chi": 0.00054,
+      "fac_mesuree": 0.00168,
+      "fac_section": 0.00087,
+      "residu": 0.00081
+    },
+    {
+      "T_am": 6.5,
+      "D": 15.0,
+      "theta": 0.074,
+      "chi": 0.00671,
+      "fac_mesuree": 0.00535,
+      "fac_section": 0.00511,
+      "residu": 0.00024
+    },
+    {
+      "T_am": 6.5,
+      "D": 18.0,
+      "theta": 0.0525,
+      "chi": 0.00368,
+      "fac_mesuree": 0.00355,
+      "fac_section": 0.00322,
+      "residu": 0.00033
+    },
+    {
+      "T_am": 6.5,
+      "D": 21.0,
+      "theta": 0.0371,
+      "chi": 0.00202,
+      "fac_mesuree": 0.00193,
+      "fac_section": 0.00237,
+      "residu": -0.00044
+    },
+    {
+      "T_am": 6.5,
+      "D": 25.0,
+      "theta": 0.0232,
+      "chi": 0.00091,
+      "fac_mesuree": 0.0012,
+      "fac_section": 0.00135,
+      "residu": -0.00015
+    },
+    {
+      "T_am": 7.0,
+      "D": 18.0,
+      "theta": 0.0488,
+      "chi": 0.00562,
+      "fac_mesuree": 0.00301,
+      "fac_section": 0.00243,
+      "residu": 0.00058
+    },
+    {
+      "T_am": 7.0,
+      "D": 21.0,
+      "theta": 0.0344,
+      "chi": 0.00308,
+      "fac_mesuree": 0.00198,
+      "fac_section": 0.00167,
+      "residu": 0.00031
+    },
+    {
+      "T_am": 7.0,
+      "D": 25.0,
+      "theta": 0.0214,
+      "chi": 0.00138,
+      "fac_mesuree": 0.00125,
+      "fac_section": 0.00125,
+      "residu": -0.0
+    }
+  ],
+  "W5": {
+    "tardif": {
+      "z": [
+        0.0,
+        0.0,
+        0.0,
+        0.016
+      ],
+      "issue": ".",
+      "horloges": {
+        "p": {
+          "ponctuelle": false,
+          "locale": false
+        },
+        "chi": {
+          "ponctuelle": false,
+          "locale": false
+        },
+        "theta": {
+          "ponctuelle": false,
+          "locale": false
+        }
+      }
+    },
+    "theta-vivant": {
+      "z": [
+        0.0,
+        0.0,
+        0.12,
+        0.011
+      ],
+      "issue": "A",
+      "horloges": {
+        "p": {
+          "ponctuelle": false,
+          "locale": false
+        },
+        "chi": {
+          "ponctuelle": false,
+          "locale": false
+        },
+        "theta": {
+          "ponctuelle": true,
+          "locale": true
+        }
+      }
+    },
+    "chi-vivant": {
+      "z": [
+        0.0,
+        0.015,
+        0.05,
+        0.0125
+      ],
+      "issue": ".",
+      "horloges": {
+        "p": {
+          "ponctuelle": false,
+          "locale": false
+        },
+        "chi": {
+          "ponctuelle": false,
+          "locale": true
+        },
+        "theta": {
+          "ponctuelle": false,
+          "locale": true
+        }
+      }
+    },
+    "profond": {
+      "z": [
+        0.6,
+        0.015,
+        0.1,
+        0.01
+      ],
+      "issue": "A",
+      "horloges": {
+        "p": {
+          "ponctuelle": true,
+          "locale": true
+        },
+        "chi": {
+          "ponctuelle": true,
+          "locale": true
+        },
+        "theta": {
+          "ponctuelle": true,
+          "locale": true
+        }
+      }
+    }
+  },
+  "W6": {
+    "z_temoin": [
+      0.05349,
+      0.00643,
+      0.10435,
+      0.01669
+    ],
+    "motif": "............AA",
+    "bords": [
+      0.01703
+    ],
+    "fac_predite": -0.00076,
+    "fac_mesuree_fiii6": -0.0006
+  }
+}

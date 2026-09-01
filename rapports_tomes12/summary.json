@@ -1,0 +1,393 @@
+{
+  "patch_version": "iws-core-0.1.1-patch1",
+  "git_commit": "2bab269",
+  "steps": 5000,
+  "seeds": [
+    7,
+    11,
+    19,
+    23,
+    31,
+    37,
+    41,
+    43,
+    53,
+    61
+  ],
+  "arms": {
+    "X0-P1": {
+      "config": {
+        "n_nodes": 20,
+        "dim": 2,
+        "dt": 0.05,
+        "steps": 5000,
+        "integrator": "legacy_semi_implicit",
+        "gamma0": 0.25,
+        "gamma_tau": 1.25,
+        "alpha_trace": 0.45,
+        "beta_trace": 0.12,
+        "lambda_metric": 2.0,
+        "coupling_gain": 0.8,
+        "kappa1": 0.6,
+        "kappa2": 0.4,
+        "kappa3": 0.5,
+        "kappa_rel": 0.7,
+        "theta_kairos": 1.25,
+        "relax_P": 0.35,
+        "relax_V": 0.5,
+        "trace_mode": "linear",
+        "rewiring_mode": "legacy",
+        "pressure_mode": "legacy",
+        "input_mode": "fixed_heterogeneous",
+        "geometry_mode": "anisotropic",
+        "use_kairos": true,
+        "input_epsilon": 0.15,
+        "input_sigma": 0.0,
+        "kairos_kick_sigma": 0.1,
+        "remove_edges": 2,
+        "add_edges": 3,
+        "legacy_add_edges": 2,
+        "requested_rewires": 2,
+        "max_density": 0.35,
+        "graph_mode": "erdos_renyi",
+        "er_p": 0.15,
+        "circulant_offsets": [
+          1,
+          2
+        ],
+        "rng_mode": "legacy_shared",
+        "deterministic_ties": true,
+        "symmetry_tolerance": 1e-12,
+        "init_h_sigma": 0.6,
+        "init_v_sigma": 0.1,
+        "init_w_sigma": 0.3,
+        "identical_initial_states": false,
+        "perturb_node": -1,
+        "perturb_eps": 0.0,
+        "patch_version": "iws-core-0.1.1-patch1"
+      },
+      "total_kairos_per_seed": [
+        9578,
+        9364,
+        10420,
+        9076,
+        8814,
+        9672,
+        9730,
+        8879,
+        8560,
+        8597
+      ],
+      "invariant_violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "finals": {
+        "mean_trace": [
+          12.098004238434921,
+          0.9502018265364014
+        ],
+        "mean_pressure": [
+          0.8663131662046363,
+          0.05061042806169964
+        ],
+        "num_kairos": [
+          2.4,
+          1.3564659966250536
+        ],
+        "num_edges": [
+          67.7,
+          0.45825756949558405
+        ],
+        "h_norm": [
+          3.3070856382715292,
+          0.282056882362405
+        ],
+        "h_var": [
+          2.1005888558110977,
+          1.773639141189293
+        ],
+        "homophily": [
+          0.9852215221055065,
+          0.025488243843751646
+        ]
+      },
+      "elapsed_s": 24.3
+    },
+    "X0-S": {
+      "config": {
+        "n_nodes": 20,
+        "dim": 2,
+        "dt": 0.05,
+        "steps": 5000,
+        "integrator": "legacy_semi_implicit",
+        "gamma0": 0.25,
+        "gamma_tau": 1.25,
+        "alpha_trace": 0.45,
+        "beta_trace": 0.12,
+        "lambda_metric": 2.0,
+        "coupling_gain": 0.8,
+        "kappa1": 0.6,
+        "kappa2": 0.4,
+        "kappa3": 0.5,
+        "kappa_rel": 0.7,
+        "theta_kairos": 1.25,
+        "relax_P": 0.35,
+        "relax_V": 0.5,
+        "trace_mode": "saturated",
+        "rewiring_mode": "legacy",
+        "pressure_mode": "legacy",
+        "input_mode": "fixed_heterogeneous",
+        "geometry_mode": "anisotropic",
+        "use_kairos": true,
+        "input_epsilon": 0.15,
+        "input_sigma": 0.0,
+        "kairos_kick_sigma": 0.1,
+        "remove_edges": 2,
+        "add_edges": 3,
+        "legacy_add_edges": 2,
+        "requested_rewires": 2,
+        "max_density": 0.35,
+        "graph_mode": "erdos_renyi",
+        "er_p": 0.15,
+        "circulant_offsets": [
+          1,
+          2
+        ],
+        "rng_mode": "legacy_shared",
+        "deterministic_ties": true,
+        "symmetry_tolerance": 1e-12,
+        "init_h_sigma": 0.6,
+        "init_v_sigma": 0.1,
+        "init_w_sigma": 0.3,
+        "identical_initial_states": false,
+        "perturb_node": -1,
+        "perturb_eps": 0.0,
+        "patch_version": "iws-core-0.1.1-patch1"
+      },
+      "total_kairos_per_seed": [
+        10432,
+        9034,
+        9818,
+        8915,
+        10024,
+        9227,
+        9659,
+        8784,
+        8574,
+        8895
+      ],
+      "invariant_violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "finals": {
+        "mean_trace": [
+          5.142496752322355,
+          0.06396194761282181
+        ],
+        "mean_pressure": [
+          0.8407550615923111,
+          0.047823538161165004
+        ],
+        "num_kairos": [
+          2.6,
+          1.42828568570857
+        ],
+        "num_edges": [
+          67.7,
+          0.45825756949558405
+        ],
+        "h_norm": [
+          3.2792151070746387,
+          0.11921674608400797
+        ],
+        "h_var": [
+          1.8581435730239977,
+          1.560867711082846
+        ],
+        "homophily": [
+          0.9840374671836584,
+          0.023546319063770752
+        ]
+      },
+      "elapsed_s": 24.5
+    },
+    "X0-Core": {
+      "config": {
+        "n_nodes": 20,
+        "dim": 2,
+        "dt": 0.05,
+        "steps": 5000,
+        "integrator": "explicit_euler",
+        "gamma0": 0.25,
+        "gamma_tau": 1.25,
+        "alpha_trace": 0.45,
+        "beta_trace": 0.12,
+        "lambda_metric": 2.0,
+        "coupling_gain": 0.8,
+        "kappa1": 0.6,
+        "kappa2": 0.4,
+        "kappa3": 0.5,
+        "kappa_rel": 0.7,
+        "theta_kairos": 1.25,
+        "relax_P": 0.35,
+        "relax_V": 0.5,
+        "trace_mode": "saturated",
+        "rewiring_mode": "conservative",
+        "pressure_mode": "core",
+        "input_mode": "zero",
+        "geometry_mode": "anisotropic",
+        "use_kairos": true,
+        "input_epsilon": 0.15,
+        "input_sigma": 0.0,
+        "kairos_kick_sigma": 0.0,
+        "remove_edges": 2,
+        "add_edges": 3,
+        "legacy_add_edges": 2,
+        "requested_rewires": 2,
+        "max_density": 0.35,
+        "graph_mode": "erdos_renyi",
+        "er_p": 0.15,
+        "circulant_offsets": [
+          1,
+          2
+        ],
+        "rng_mode": "split",
+        "deterministic_ties": true,
+        "symmetry_tolerance": 1e-12,
+        "init_h_sigma": 0.6,
+        "init_v_sigma": 0.1,
+        "init_w_sigma": 0.3,
+        "identical_initial_states": false,
+        "perturb_node": -1,
+        "perturb_eps": 0.0,
+        "patch_version": "iws-core-0.1.1-patch1"
+      },
+      "total_kairos_per_seed": [
+        6950,
+        1624,
+        1,
+        6862,
+        7716,
+        7891,
+        407,
+        7745,
+        7297,
+        7872
+      ],
+      "invariant_violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "finals": {
+        "mean_trace": [
+          3.7676879823538463,
+          2.1963810807548243
+        ],
+        "mean_pressure": [
+          0.6178306203497274,
+          0.3583328367698864
+        ],
+        "num_kairos": [
+          0.9,
+          0.9433981132056605
+        ],
+        "num_edges": [
+          28.7,
+          4.648655719667784
+        ],
+        "h_norm": [
+          2.353738950312347,
+          1.3721098422822526
+        ],
+        "h_var": [
+          0.3702341344763166,
+          0.36694580489829465
+        ],
+        "homophily": [
+          0.6296813822405728,
+          0.5736298343203484
+        ]
+      },
+      "elapsed_s": 22.5
+    }
+  },
+  "integrator_checks": {
+    "X0-P1(kick=0)": {
+      "pairable": true,
+      "max_delta": 0.1384328439162667,
+      "event_count": [
+        8384,
+        8270
+      ],
+      "event_count_gap": 114,
+      "event_time_max_gap": 3.3500000000000227,
+      "converged": false,
+      "tolerance": 0.05,
+      "mean_trace": 0.030555809845672806,
+      "mean_pressure": 0.1384328439162667,
+      "h_norm": 0.01652042762372918,
+      "h_var": 0.041150107510167414,
+      "homophily": 0.03177503748998587
+    },
+    "X0-S(kick=0)": {
+      "pairable": true,
+      "max_delta": 0.13947280634084813,
+      "event_count": [
+        9004,
+        9287
+      ],
+      "event_count_gap": 283,
+      "event_time_max_gap": 6.699999999999989,
+      "converged": false,
+      "tolerance": 0.05,
+      "mean_trace": 0.029023158932731767,
+      "mean_pressure": 0.13947280634084813,
+      "h_norm": 0.01756298588089938,
+      "h_var": 0.072462115318215,
+      "homophily": 0.05798630959856187
+    },
+    "X0-Core": {
+      "pairable": true,
+      "max_delta": 0.11950887916414808,
+      "event_count": [
+        6950,
+        6966
+      ],
+      "event_count_gap": 16,
+      "event_time_max_gap": 0.5750000000000028,
+      "converged": false,
+      "tolerance": 0.05,
+      "mean_trace": 0.0024411678438952225,
+      "mean_pressure": 0.11950887916414808,
+      "h_norm": 0.0030385364532307746,
+      "h_var": 0.004872692680731853,
+      "homophily": 0.01719045863299304
+    }
+  }
+}
